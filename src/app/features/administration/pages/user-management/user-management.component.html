@@ -1,0 +1,77 @@
+<app-page-header
+  title="User Management"
+  subtitle="Manage application users and their roles"
+  [breadcrumbs]="[{ label: 'Administration' }, { label: 'Users' }]"
+/>
+
+<p-table
+  [value]="users"
+  [lazy]="true"
+  [paginator]="true"
+  [rows]="pageSize"
+  [totalRecords]="totalCount"
+  [loading]="loading"
+  [rowsPerPageOptions]="[10, 20, 50]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+  (onLazyLoad)="onLazyLoad($event)"
+  dataKey="id"
+  styleClass="p-datatable-sm p-datatable-striped"
+>
+  <ng-template #caption>
+    <div class="table-header">
+      <p-iconfield>
+        <p-inputicon styleClass="pi pi-search" />
+        <input pInputText type="text" placeholder="Search users..." (input)="onSearch($event)" />
+      </p-iconfield>
+    </div>
+  </ng-template>
+
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="firstName">Name <p-sortIcon field="firstName" /></th>
+      <th pSortableColumn="email">Email <p-sortIcon field="email" /></th>
+      <th>Username</th>
+      <th>Status</th>
+      <th style="width: 8rem">Actions</th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-user>
+    <tr>
+      <td>{{ user.firstName }} {{ user.lastName }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.username }}</td>
+      <td>
+        <p-tag
+          [value]="user.isActive ? 'Active' : 'Inactive'"
+          [severity]="user.isActive ? 'success' : 'danger'"
+          [rounded]="true"
+        />
+      </td>
+      <td>
+        <div class="action-buttons">
+          <p-button
+            icon="pi pi-ban"
+            [text]="true"
+            [rounded]="true"
+            severity="danger"
+            pTooltip="Deactivate"
+            (onClick)="onDeactivate(user.id, user.firstName + ' ' + user.lastName)"
+            [disabled]="!user.isActive"
+          />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="5">
+        <app-empty-state title="No users found" icon="fa-users" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-confirmDialog />

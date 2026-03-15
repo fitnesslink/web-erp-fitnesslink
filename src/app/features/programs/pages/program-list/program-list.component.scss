@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+:host ::ng-deep .p-datatable {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+:host ::ng-deep .mt-3 {
+  margin-top: 1rem;
+}

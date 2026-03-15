@@ -1,0 +1,20 @@
+:host {
+  display: block;
+}
+
+:host ::ng-deep .p-datatable {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.25rem;
+}

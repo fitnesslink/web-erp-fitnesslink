@@ -1,0 +1,117 @@
+<app-page-header
+  [title]="isEdit() ? 'Edit Program' : 'Create Program'"
+  [breadcrumbs]="[
+    { label: 'Programs', routerLink: '/programs' },
+    { label: isEdit() ? 'Edit' : 'Create' },
+  ]"
+>
+  <p-button label="Back" icon="pi pi-arrow-left" severity="secondary" [outlined]="true" (onClick)="onBack()" />
+</app-page-header>
+
+@if (store.loading()) {
+  <p>Loading...</p>
+} @else {
+  <p-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="field">
+          <label for="name">Name *</label>
+          <input id="name" pInputText formControlName="name" placeholder="Program name" class="w-full" />
+          @if (form.controls.name.invalid && form.controls.name.touched) {
+            <small class="p-error">Name is required</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="statusId">Status *</label>
+          <p-select
+            id="statusId"
+            formControlName="statusId"
+            [options]="classificationStore.contentStatuses()"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Select status"
+            styleClass="w-full"
+          />
+        </div>
+
+        <div class="field">
+          <label for="estimatedTime">Estimated Time (seconds)</label>
+          <p-inputnumber
+            id="estimatedTime"
+            formControlName="estimatedTime"
+            [min]="0"
+            placeholder="Optional"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+          />
+        </div>
+
+        <div class="field full-width">
+          <label for="description">Description</label>
+          <textarea id="description" pTextarea formControlName="description" rows="3" class="w-full"></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <p-button label="Cancel" severity="secondary" [outlined]="true" (onClick)="onBack()" />
+        <p-button
+          [label]="isEdit() ? 'Update' : 'Create'"
+          icon="pi pi-check"
+          type="submit"
+          [loading]="store.saving()"
+          [disabled]="form.invalid"
+        />
+      </div>
+    </form>
+  </p-card>
+
+  @if (isEdit() && store.selected(); as program) {
+    <p-divider />
+    <p-card>
+      <ng-template #header>
+        <div class="schedule-header">
+          <h3>Weekly Schedule</h3>
+          <p-button label="Add Workout" icon="pi pi-plus" [outlined]="true" size="small" (onClick)="showAddDialog = true" />
+        </div>
+      </ng-template>
+
+      <div class="schedule-grid">
+        @for (day of days; track day.number) {
+          <div class="day-column">
+            <div class="day-header">{{ day.name }}</div>
+            @for (schedule of getSchedulesForDay(program.programSchedules, day.number); track schedule.id) {
+              <div class="schedule-item">
+                <span>W{{ schedule.weekNumber }}</span>
+                <span class="workout-name">{{ schedule.workoutName }}</span>
+              </div>
+            } @empty {
+              <div class="schedule-empty">No workouts</div>
+            }
+          </div>
+        }
+      </div>
+    </p-card>
+
+    <p-dialog header="Add Workout to Schedule" [(visible)]="showAddDialog" [modal]="true" [style]="{ width: '400px' }">
+      <div class="dialog-form">
+        <div class="field">
+          <label>Workout ID</label>
+          <input pInputText [(ngModel)]="newSchedule.workoutId" placeholder="Workout GUID" class="w-full" />
+        </div>
+        <div class="field">
+          <label>Week Number</label>
+          <p-inputnumber [(ngModel)]="newSchedule.weekNumber" [min]="1" [max]="12" styleClass="w-full" inputStyleClass="w-full" />
+        </div>
+        <div class="field">
+          <label>Day Number (1=Mon, 7=Sun)</label>
+          <p-inputnumber [(ngModel)]="newSchedule.dayNumber" [min]="1" [max]="7" styleClass="w-full" inputStyleClass="w-full" />
+        </div>
+      </div>
+      <ng-template #footer>
+        <p-button label="Cancel" severity="secondary" [text]="true" (onClick)="showAddDialog = false" />
+        <p-button label="Add" icon="pi pi-plus" (onClick)="onAddWeeklyWorkout()" [loading]="store.saving()" />
+      </ng-template>
+    </p-dialog>
+  }
+}

@@ -1,0 +1,63 @@
+<app-page-header
+  title="Programs"
+  subtitle="Manage workout programs"
+  [breadcrumbs]="[{ label: 'Programs' }]"
+>
+  <p-button label="New Program" icon="pi pi-plus" (onClick)="onCreate()" />
+</app-page-header>
+
+<p-table
+  [value]="store.items()"
+  [lazy]="true"
+  [paginator]="true"
+  [rows]="pageSize"
+  [totalRecords]="store.totalCount()"
+  [loading]="store.loading()"
+  [rowsPerPageOptions]="[10, 20, 50]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} programs"
+  (onLazyLoad)="onLazyLoad($event)"
+  dataKey="id"
+  styleClass="p-datatable-sm p-datatable-striped"
+>
+  <ng-template #caption>
+    <div class="table-header">
+      <p-iconfield>
+        <p-inputicon styleClass="pi pi-search" />
+        <input pInputText type="text" placeholder="Search programs..." (input)="onSearch($event)" />
+      </p-iconfield>
+    </div>
+  </ng-template>
+
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
+      <th>Status</th>
+      <th>Est. Time</th>
+      <th>Contributor</th>
+      <th style="width: 5rem">Actions</th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-program>
+    <tr>
+      <td>{{ program.name }}</td>
+      <td><app-status-badge [status]="program.statusName" /></td>
+      <td>{{ program.estimatedTime | timeFormat }}</td>
+      <td>{{ program.contributorName || '--' }}</td>
+      <td>
+        <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" (onClick)="onEdit(program.id)" />
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="5">
+        <app-empty-state title="No programs found" message="Create your first program." icon="fa-calendar-days">
+          <p-button label="Create Program" icon="pi pi-plus" [outlined]="true" (onClick)="onCreate()" styleClass="mt-3" />
+        </app-empty-state>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

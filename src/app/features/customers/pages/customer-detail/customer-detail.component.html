@@ -1,0 +1,83 @@
+<app-page-header
+  title="Customer Detail"
+  [breadcrumbs]="[
+    { label: 'Customers', routerLink: '/customers' },
+    { label: 'Detail' },
+  ]"
+>
+  <p-button label="Back" icon="pi pi-arrow-left" severity="secondary" [outlined]="true" (onClick)="onBack()" />
+</app-page-header>
+
+@if (store.loading()) {
+  <p>Loading...</p>
+} @else {
+  @if (store.selected(); as user) {
+    <div class="detail-grid">
+      <p-card header="Profile">
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Name</label>
+            <span>{{ user.firstName }} {{ user.lastName }}</span>
+          </div>
+          <div class="info-item">
+            <label>Email</label>
+            <span>{{ user.email }}</span>
+          </div>
+          <div class="info-item">
+            <label>Username</label>
+            <span>{{ user.username }}</span>
+          </div>
+          <div class="info-item">
+            <label>Alias</label>
+            <span>{{ user.alias || '--' }}</span>
+          </div>
+          <div class="info-item">
+            <label>Phone</label>
+            <span>{{ user.phone || '--' }}</span>
+          </div>
+          <div class="info-item">
+            <label>Country</label>
+            <span>{{ user.country || '--' }}</span>
+          </div>
+          <div class="info-item">
+            <label>Status</label>
+            <p-tag
+              [value]="user.isActive ? 'Active' : 'Inactive'"
+              [severity]="user.isActive ? 'success' : 'danger'"
+              [rounded]="true"
+            />
+          </div>
+          <div class="info-item">
+            <label>Roles</label>
+            <div class="role-tags">
+              @for (role of user.roles; track role) {
+                <p-tag [value]="role" severity="info" />
+              } @empty {
+                <span>No roles assigned</span>
+              }
+            </div>
+          </div>
+        </div>
+      </p-card>
+
+      @if (user.preference) {
+        <p-card header="Preferences">
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Language</label>
+              <span>{{ user.preference.language || '--' }}</span>
+            </div>
+            <div class="info-item">
+              <label>Timezone</label>
+              <span>{{ user.preference.timezone || '--' }}</span>
+            </div>
+            <div class="info-item">
+              <label>Dark Mode</label>
+              <span>{{ user.preference.darkMode ? 'Enabled' : 'Disabled' }}</span>
+            </div>
+          </div>
+        </p-card>
+      }
+    </div>
+  }
+}

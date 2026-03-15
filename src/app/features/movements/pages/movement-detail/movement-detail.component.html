@@ -1,0 +1,83 @@
+<app-page-header
+  [title]="isEdit() ? 'Edit Movement' : 'Create Movement'"
+  [breadcrumbs]="[
+    { label: 'Movements', routerLink: '/movements' },
+    { label: isEdit() ? 'Edit' : 'Create' },
+  ]"
+>
+  <p-button
+    label="Back"
+    icon="pi pi-arrow-left"
+    severity="secondary"
+    [outlined]="true"
+    (onClick)="onBack()"
+  />
+</app-page-header>
+
+@if (store.loading()) {
+  <p>Loading...</p>
+} @else {
+  <p-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="field">
+          <label for="name">Name *</label>
+          <input
+            id="name"
+            pInputText
+            formControlName="name"
+            placeholder="Movement name"
+            class="w-full"
+          />
+          @if (form.controls.name.invalid && form.controls.name.touched) {
+            <small class="p-error">Name is required</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="statusId">Status *</label>
+          <p-select
+            id="statusId"
+            formControlName="statusId"
+            [options]="classificationStore.contentStatuses()"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Select status"
+            styleClass="w-full"
+          />
+          @if (form.controls.statusId.invalid && form.controls.statusId.touched) {
+            <small class="p-error">Status is required</small>
+          }
+        </div>
+
+        <div class="field full-width">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            pTextarea
+            formControlName="description"
+            rows="4"
+            placeholder="Describe the movement..."
+            class="w-full"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <p-button
+          label="Cancel"
+          severity="secondary"
+          [outlined]="true"
+          (onClick)="onBack()"
+        />
+        <p-button
+          [label]="isEdit() ? 'Update' : 'Create'"
+          icon="pi pi-check"
+          type="submit"
+          [loading]="store.saving()"
+          [disabled]="form.invalid"
+        />
+      </div>
+    </form>
+  </p-card>
+}

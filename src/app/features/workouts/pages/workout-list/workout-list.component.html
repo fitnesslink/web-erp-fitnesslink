@@ -1,0 +1,99 @@
+<app-page-header
+  title="Workouts"
+  subtitle="Manage workout templates"
+  [breadcrumbs]="[{ label: 'Workouts' }]"
+>
+  <p-button
+    label="New Workout"
+    icon="pi pi-plus"
+    (onClick)="onCreate()"
+  />
+</app-page-header>
+
+<p-table
+  [value]="store.items()"
+  [lazy]="true"
+  [paginator]="true"
+  [rows]="pageSize"
+  [totalRecords]="store.totalCount()"
+  [loading]="store.loading()"
+  [rowsPerPageOptions]="[10, 20, 50]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} workouts"
+  (onLazyLoad)="onLazyLoad($event)"
+  dataKey="id"
+  styleClass="p-datatable-sm p-datatable-striped"
+>
+  <ng-template #caption>
+    <div class="table-header">
+      <p-iconfield>
+        <p-inputicon styleClass="pi pi-search" />
+        <input
+          pInputText
+          type="text"
+          placeholder="Search workouts..."
+          (input)="onSearch($event)"
+        />
+      </p-iconfield>
+    </div>
+  </ng-template>
+
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
+      <th>Status</th>
+      <th>Est. Time</th>
+      <th>Contributor</th>
+      <th style="width: 8rem">Actions</th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-workout>
+    <tr>
+      <td>{{ workout.name }}</td>
+      <td><app-status-badge [status]="workout.statusName" /></td>
+      <td>{{ workout.estimatedTime | timeFormat }}</td>
+      <td>{{ workout.contributorName || '--' }}</td>
+      <td>
+        <div class="action-buttons">
+          <p-button
+            icon="pi pi-pencil"
+            [text]="true"
+            [rounded]="true"
+            severity="info"
+            (onClick)="onEdit(workout.id)"
+          />
+          <p-button
+            icon="pi pi-trash"
+            [text]="true"
+            [rounded]="true"
+            severity="danger"
+            (onClick)="onDelete(workout.id, workout.name)"
+          />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="5">
+        <app-empty-state
+          title="No workouts found"
+          message="Create your first workout to get started."
+          icon="fa-dumbbell"
+        >
+          <p-button
+            label="Create Workout"
+            icon="pi pi-plus"
+            [outlined]="true"
+            (onClick)="onCreate()"
+            styleClass="mt-3"
+          />
+        </app-empty-state>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-confirmDialog />
