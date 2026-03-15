@@ -24,8 +24,9 @@ import { TopbarComponent } from '../topbar/topbar.component';
   styles: `
     .layout-wrapper {
       display: flex;
-      min-height: 100vh;
+      height: 100vh;
       background-color: #F0F4F5;
+      overflow: hidden;
     }
 
     .layout-main {
@@ -38,6 +39,16 @@ import { TopbarComponent } from '../topbar/topbar.component';
     .layout-content {
       flex: 1;
       padding: 0 20px 20px 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    /* Routed components fill available space and scroll by default */
+    .layout-content ::ng-deep > *:not(router-outlet) {
+      flex: 1;
+      min-height: 0;
       overflow-y: auto;
     }
   `,

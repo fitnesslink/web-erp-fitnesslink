@@ -3,42 +3,44 @@
   subtitle="View personalization criteria and options"
 />
 
-@if (store.loading()) {
-  <p>Loading...</p>
-} @else if (!store.items().length) {
-  <app-empty-state
-    title="No personalizations found"
-    message="Personalization criteria have not been configured yet."
-    icon="fa-sliders"
-  />
-} @else {
-  <p-accordion [multiple]="true">
-    @for (personalization of store.items(); track personalization.id) {
-      <p-accordion-panel>
-        <p-accordion-header>
-          <div class="criteria-header">
-            <span class="criteria-name">{{ personalization.name }}</span>
-            <p-tag [value]="personalization.alias" severity="info" [rounded]="true" />
-            <span class="option-count">{{ personalization.options.length }} options</span>
-          </div>
-        </p-accordion-header>
-        <p-accordion-content>
-          <div class="options-grid">
-            @for (option of personalization.options; track option.id) {
-              <p-card styleClass="option-card">
-                <div class="option-content">
-                  <span>{{ option.description }}</span>
-                  @if (option.trainingLevelName) {
-                    <p-tag [value]="option.trainingLevelName" severity="secondary" size="small" />
-                  }
-                </div>
-              </p-card>
-            } @empty {
-              <p class="no-options">No options defined.</p>
-            }
-          </div>
-        </p-accordion-content>
-      </p-accordion-panel>
-    }
-  </p-accordion>
-}
+<ng-scrollbar appearance="compact" visibility="hover" orientation="vertical">
+  @if (store.loading()) {
+    <p>Loading...</p>
+  } @else if (!store.items().length) {
+    <app-empty-state
+      title="No personalizations found"
+      message="Personalization criteria have not been configured yet."
+      icon="fa-sliders"
+    />
+  } @else {
+    <p-accordion [multiple]="true">
+      @for (personalization of store.items(); track personalization.id) {
+        <p-accordion-panel>
+          <p-accordion-header>
+            <div class="criteria-header">
+              <span class="criteria-name">{{ personalization.name }}</span>
+              <p-tag [value]="personalization.alias" severity="info" [rounded]="true" />
+              <span class="option-count">{{ personalization.options.length }} options</span>
+            </div>
+          </p-accordion-header>
+          <p-accordion-content>
+            <div class="options-grid">
+              @for (option of personalization.options; track option.id) {
+                <p-card styleClass="option-card">
+                  <div class="option-content">
+                    <span>{{ option.description }}</span>
+                    @if (option.trainingLevelName) {
+                      <p-tag [value]="option.trainingLevelName" severity="secondary" size="small" />
+                    }
+                  </div>
+                </p-card>
+              } @empty {
+                <p class="no-options">No options defined.</p>
+              }
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+      }
+    </p-accordion>
+  }
+</ng-scrollbar>

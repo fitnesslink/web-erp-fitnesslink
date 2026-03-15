@@ -13,6 +13,7 @@
 html,
 body {
   height: 100%;
+  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
@@ -60,6 +61,15 @@ button {
 
 .page-container {
   padding: 1.5rem;
+}
+
+// ngx-scrollbar theme
+ng-scrollbar {
+  --scrollbar-track-thickness: 6px;
+  --scrollbar-thumb-color: #ccc;
+  --scrollbar-thumb-hover-color: #aaa;
+  --scrollbar-thumb-shape: 3px;
+  --scrollbar-track-color: transparent;
 }
 
 // PrimeNG component overrides for FitnessLink theme

@@ -1,11 +1,17 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden !important;
+}
+
+:host ::ng-deep p-table {
+  flex: 1;
+  min-height: 0;
 }
 
 :host ::ng-deep .p-datatable {
   background: #fff;
   border-radius: 10px;
-  overflow: hidden;
 }
 
 .table-header {

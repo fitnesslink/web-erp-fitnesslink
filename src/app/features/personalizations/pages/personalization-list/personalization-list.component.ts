@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Card } from 'primeng/card';
 import { Tag } from 'primeng/tag';
 import { Accordion, AccordionContent, AccordionHeader, AccordionPanel } from 'primeng/accordion';
+import { NgScrollbar } from 'ngx-scrollbar';
 
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
@@ -17,6 +18,7 @@ import { PersonalizationStore } from '../../store/personalization.store';
     AccordionPanel,
     AccordionHeader,
     AccordionContent,
+    NgScrollbar,
     PageHeaderComponent,
     EmptyStateComponent,
   ],

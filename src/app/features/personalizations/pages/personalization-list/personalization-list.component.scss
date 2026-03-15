@@ -1,3 +1,14 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden !important;
+}
+
+ng-scrollbar {
+  flex: 1;
+  min-height: 0;
+}
+
 .criteria-header {
   display: flex;
   align-items: center;
