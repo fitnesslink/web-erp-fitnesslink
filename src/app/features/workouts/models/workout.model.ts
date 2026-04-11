@@ -9,6 +9,20 @@ export interface WorkoutDto {
   thumbnailId: string | null;
 }
 
+export interface WorkoutListViewDto {
+  id: string;
+  name: string;
+  status: string;
+  contributorCompany: string | null;
+  contributorUser: string | null;
+  estimatedTime: number;
+  totalUsers: number;
+  totalSessions: number;
+  totalMovements: number;
+  thumbnailId: string | null;
+  thumbnailUrl: string | null;
+}
+
 export interface WorkoutDetailDto {
   id: string;
   name: string;

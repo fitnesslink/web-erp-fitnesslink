@@ -10,6 +10,7 @@ import {
   UpdateWorkoutDto,
   WorkoutDetailDto,
   WorkoutDto,
+  WorkoutListViewDto,
   WorkoutTaskDto,
 } from '../models/workout.model';
 
@@ -18,8 +19,8 @@ export class WorkoutService {
   private api = inject(ApiService);
   private path = '/api/v1/workouts';
 
-  getWorkouts(params: PaginationParams): Observable<PagedResult<WorkoutDto>> {
-    return this.api.getPage<WorkoutDto>(this.path, params);
+  getWorkouts(params: PaginationParams): Observable<PagedResult<WorkoutListViewDto>> {
+    return this.api.getPage<WorkoutListViewDto>(`${this.path}/list-view`, params);
   }
 
   getWorkout(id: string): Observable<WorkoutDetailDto> {

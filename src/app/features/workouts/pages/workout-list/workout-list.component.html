@@ -41,20 +41,40 @@
 
   <ng-template #header>
     <tr>
+      <th style="width: 3rem"></th>
       <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
-      <th>Status</th>
+      <th pSortableColumn="status">Status <p-sortIcon field="status" /></th>
       <th>Est. Time</th>
       <th>Contributor</th>
+      <th pSortableColumn="totalUsers">Users <p-sortIcon field="totalUsers" /></th>
+      <th pSortableColumn="totalSessions">Sessions <p-sortIcon field="totalSessions" /></th>
+      <th pSortableColumn="totalMovements">Movements <p-sortIcon field="totalMovements" /></th>
       <th style="width: 8rem">Actions</th>
     </tr>
   </ng-template>
 
   <ng-template #body let-workout>
     <tr>
+      <td>
+        @if (workout.thumbnailUrl) {
+          <img
+            [src]="workout.thumbnailUrl"
+            [alt]="workout.name"
+            class="workout-thumbnail"
+          />
+        } @else {
+          <div class="workout-thumbnail workout-thumbnail-placeholder">
+            <i class="pi pi-image"></i>
+          </div>
+        }
+      </td>
       <td>{{ workout.name }}</td>
-      <td><app-status-badge [status]="workout.statusName" /></td>
+      <td><app-status-badge [status]="workout.status" /></td>
       <td>{{ workout.estimatedTime | timeFormat }}</td>
-      <td>{{ workout.contributorName || '--' }}</td>
+      <td>{{ workout.contributorCompany || workout.contributorUser || '--' }}</td>
+      <td>{{ workout.totalUsers }}</td>
+      <td>{{ workout.totalSessions }}</td>
+      <td>{{ workout.totalMovements }}</td>
       <td>
         <div class="action-buttons">
           <p-button
@@ -78,7 +98,7 @@
 
   <ng-template #emptymessage>
     <tr>
-      <td colspan="5">
+      <td colspan="9">
         <app-empty-state
           title="No workouts found"
           message="Create your first workout to get started."

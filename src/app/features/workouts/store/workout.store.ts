@@ -9,7 +9,7 @@ import {
   CreateWorkoutTaskDto,
   UpdateWorkoutDto,
   WorkoutDetailDto,
-  WorkoutDto,
+  WorkoutListViewDto,
 } from '../models/workout.model';
 import { WorkoutService } from '../services/workout.service';
 
@@ -18,7 +18,7 @@ export class WorkoutStore {
   private service = inject(WorkoutService);
   private notifications = inject(NotificationService);
 
-  readonly items = signal<WorkoutDto[]>([]);
+  readonly items = signal<WorkoutListViewDto[]>([]);
   readonly selected = signal<WorkoutDetailDto | null>(null);
   readonly loading = signal(false);
   readonly saving = signal(false);

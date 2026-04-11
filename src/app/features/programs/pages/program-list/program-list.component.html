@@ -32,20 +32,40 @@
 
   <ng-template #header>
     <tr>
+      <th style="width: 3rem"></th>
       <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
-      <th>Status</th>
+      <th pSortableColumn="status">Status <p-sortIcon field="status" /></th>
       <th>Est. Time</th>
       <th>Contributor</th>
+      <th pSortableColumn="weeks">Weeks <p-sortIcon field="weeks" /></th>
+      <th pSortableColumn="totalWorkouts">Workouts <p-sortIcon field="totalWorkouts" /></th>
+      <th pSortableColumn="totalSessions">Sessions <p-sortIcon field="totalSessions" /></th>
       <th style="width: 5rem">Actions</th>
     </tr>
   </ng-template>
 
   <ng-template #body let-program>
     <tr>
+      <td>
+        @if (program.thumbnailUrl) {
+          <img
+            [src]="program.thumbnailUrl"
+            [alt]="program.name"
+            class="program-thumbnail"
+          />
+        } @else {
+          <div class="program-thumbnail program-thumbnail-placeholder">
+            <i class="pi pi-image"></i>
+          </div>
+        }
+      </td>
       <td>{{ program.name }}</td>
-      <td><app-status-badge [status]="program.statusName" /></td>
+      <td><app-status-badge [status]="program.status" /></td>
       <td>{{ program.estimatedTime | timeFormat }}</td>
-      <td>{{ program.contributorName || '--' }}</td>
+      <td>{{ program.contributorCompany || program.contributorUser || '--' }}</td>
+      <td>{{ program.weeks }}</td>
+      <td>{{ program.totalWorkouts }}</td>
+      <td>{{ program.totalSessions }}</td>
       <td>
         <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" (onClick)="onEdit(program.id)" />
       </td>
@@ -54,7 +74,7 @@
 
   <ng-template #emptymessage>
     <tr>
-      <td colspan="5">
+      <td colspan="9">
         <app-empty-state title="No programs found" message="Create your first program." icon="fa-calendar-days">
           <p-button label="Create Program" icon="pi pi-plus" [outlined]="true" (onClick)="onCreate()" styleClass="mt-3" />
         </app-empty-state>

@@ -7,6 +7,7 @@ import { PaginationParams } from '../../../core/models/pagination-params.model';
 import {
   AddWeeklyWorkoutDto,
   CreateWorkoutProgramDto,
+  ProgramListViewDto,
   ProgramScheduleDto,
   UpdateProgramDto,
   WorkoutProgramDetailDto,
@@ -18,8 +19,8 @@ export class ProgramService {
   private api = inject(ApiService);
   private path = '/api/v1/programs';
 
-  getPrograms(params: PaginationParams): Observable<PagedResult<WorkoutProgramDto>> {
-    return this.api.getPage<WorkoutProgramDto>(this.path, params);
+  getPrograms(params: PaginationParams): Observable<PagedResult<ProgramListViewDto>> {
+    return this.api.getPage<ProgramListViewDto>(`${this.path}/list-view`, params);
   }
 
   getProgram(id: string): Observable<WorkoutProgramDetailDto> {

@@ -42,6 +42,7 @@
 
   <ng-template #header>
     <tr>
+      <th style="width: 3rem"></th>
       <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
       <th pSortableColumn="status">Status <p-sortIcon field="status" /></th>
       <th>Contributor</th>
@@ -53,6 +54,19 @@
 
   <ng-template #body let-movement>
     <tr>
+      <td>
+        @if (movement.thumbnailUrl) {
+          <img
+            [src]="movement.thumbnailUrl"
+            [alt]="movement.name"
+            class="movement-thumbnail"
+          />
+        } @else {
+          <div class="movement-thumbnail movement-thumbnail-placeholder">
+            <i class="pi pi-image"></i>
+          </div>
+        }
+      </td>
       <td>{{ movement.name }}</td>
       <td><app-status-badge [status]="movement.status" /></td>
       <td>{{ movement.contributorCompany || movement.contributorUser || '--' }}</td>
@@ -81,7 +95,7 @@
 
   <ng-template #emptymessage>
     <tr>
-      <td colspan="6">
+      <td colspan="7">
         <app-empty-state
           title="No movements found"
           message="Create your first movement to get started."

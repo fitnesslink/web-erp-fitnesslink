@@ -20,6 +20,22 @@
   align-items: center;
 }
 
+.program-thumbnail {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.program-thumbnail-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-200, #e5e7eb);
+  color: var(--text-color-secondary, #6b7280);
+  font-size: 0.75rem;
+}
+
 :host ::ng-deep .mt-3 {
   margin-top: 1rem;
 }

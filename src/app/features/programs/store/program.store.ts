@@ -7,9 +7,9 @@ import { NotificationService } from '../../../core/services/notification.service
 import {
   AddWeeklyWorkoutDto,
   CreateWorkoutProgramDto,
+  ProgramListViewDto,
   UpdateProgramDto,
   WorkoutProgramDetailDto,
-  WorkoutProgramDto,
 } from '../models/program.model';
 import { ProgramService } from '../services/program.service';
 
@@ -18,7 +18,7 @@ export class ProgramStore {
   private service = inject(ProgramService);
   private notifications = inject(NotificationService);
 
-  readonly items = signal<WorkoutProgramDto[]>([]);
+  readonly items = signal<ProgramListViewDto[]>([]);
   readonly selected = signal<WorkoutProgramDetailDto | null>(null);
   readonly loading = signal(false);
   readonly saving = signal(false);

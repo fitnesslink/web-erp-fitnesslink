@@ -11,13 +11,13 @@ export interface MovementDto {
 export interface MovementListViewDto {
   id: string;
   name: string;
-  code: string;
   status: string;
   contributorCompany: string | null;
   contributorUser: string | null;
   totalUsers: number;
   workoutSessions: number;
-  description: string | null;
+  thumbnailId: string | null;
+  thumbnailUrl: string | null;
 }
 
 export interface MovementDetailDto {

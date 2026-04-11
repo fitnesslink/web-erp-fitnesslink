@@ -7,6 +7,20 @@ export interface WorkoutProgramDto {
   contributorName: string | null;
 }
 
+export interface ProgramListViewDto {
+  id: string;
+  name: string;
+  status: string;
+  contributorCompany: string | null;
+  contributorUser: string | null;
+  estimatedTime: number | null;
+  weeks: number;
+  totalWorkouts: number;
+  totalSessions: number;
+  thumbnailId: string | null;
+  thumbnailUrl: string | null;
+}
+
 export interface WorkoutProgramDetailDto {
   id: string;
   name: string;
